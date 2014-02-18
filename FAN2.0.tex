@@ -1,0 +1,311 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[cp1251]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage[OT1]{fontenc}
+
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\parindent=0cm
+\author{Чёрный А.К., Ельник С.И.}
+\title{Конспект по функциональному анализу \\ проф. Баранов А.Д.}
+\date{6 семестр}
+
+\DeclareMathOperator*{\Lin}{Lin}
+\DeclareMathOperator*{\supp}{supp}
+\DeclareMathOperator*{\diam}{diam}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator*{\vraisup}{vraisup}
+\DeclareMathOperator*{\cl}{cl}
+\DeclareMathOperator*{\Int}{Int}
+\DeclareMathOperator*{\Conv}{Conv}
+\renewcommand*{\Re}{\operatorname{Re}}
+\renewcommand*{\Im}{\operatorname{Im}}
+
+\newcommand{\CRK}{C_{\mathbb{R}}(K)}
+\newcommand{\then}{\ \Longrightarrow \ }
+\newcommand{\eps}{\varepsilon}
+\newcommand{\com}{\backslash \backslash}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\vphi}{\varphi}
+\newcommand{\iaoi}{\ \Longleftrightarrow \ }
+\newcommand{\empt}{\varnothing}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\sm}{\sum\limits}
+\newcommand{\I}{\mathbb{I}}
+\renewcommand{\it}{\int\limits}
+\renewcommand{\L}{\mathcal{L}}
+\renewcommand{\bar}{\overline}
+\renewcommand{\tilde}{\widetilde}
+
+\newtheorem*{dfnnn}{Определение}
+\newtheorem*{thmnn}{Теорема}
+\newtheorem{thm}{Теорема}[section]
+\newtheorem{dfn}[thm]{Определение}
+\newtheorem{sug}[thm]{Предложение}
+\newtheorem*{prop}{Свойство}
+\newtheorem{lem}[thm]{Лемма}
+\newtheorem*{con}{Следствие}
+\newtheorem*{note}{Замечание}
+\newtheorem{exer}{Задача}
+\newtheorem*{notation}{Напоминание}
+\newtheorem*{ex}{Пример}%[section]
+\newtheorem*{design}{Обозначение}
+
+\begin{document}
+
+\maketitle
+
+\setcounter{chapter}{5}
+
+\chapter{????????}
+
+\setcounter{section}{97}
+\section{Линейные функционалы в нормированных пространствах}
+
+\begin{notation}
+\begin{thmnn}[Комплексная теорема Хана-Банаха]
+$X$ -- векторное пространство над $\C$. $X_0 \subset X$ -- линейное продпространство.
+
+$p$ -- полунорма на $X$, $f_0: X_0 \to \C$ -- линейный функционал, и $|f_0(x)| \le p(x) \ \forall x \in X_0$.
+
+Тогда $\exists f : X \to \C$ -- линейный функционал : $f \big|_{X_0} = f_0$ и $|f(x) | \le p(x) \ \forall x \in X$.
+
+\end{thmnn}
+\end{notation}
+
+\begin{design}
+$X$ -- нормированное пространство над $\C$.
+
+$X^*$ -- пространство всех ограниченных функционалов ($X^* = L(X,\C)$).
+
+$X^*$ -- банахово пространство.
+\end{design}
+
+\begin{con}[1]
+$X$ -- нормированное пространство, $X_0 \subset X$ -- линейное подпространство, $f_0 \in X^*_0$. Тогда $\exists f \in X^* \ : \ f \big|_{X_0} = f_0$ и $\|f\| = \|f_0\|$.
+\end{con}
+
+\begin{proof}
+$p(x) := \| f_0 \| \cdot \|x \|$, $|f_0(x)| \le p(x)$
+
+По теореме Хана-Банаха $\exists f \ : \ X \to \C$ -- линейный функционал : 
+$$f \big|_{X_0} = f_0,\ \ \ \ \ |f(x)| \le p(x) \ \forall x \in X.$$
+
+$|f(x)| \le \|f_0 \| \cdot \|x\| \then f \in X^*$ и $\|f\| = \|f_0 \|$.
+
+$\|f\| \ge \|f_0\|$ -- очевидно, так как $f_0$ -- сужение $f$.
+\end{proof}
+
+\begin{con}[2. О достаточном числе линейных функционалов]
+$X$ -- нормированное пространство.
+Тогда $\forall x_0 \in X \ \exists f \in X^* \ : \ \|f\|=1$ и $f(x_0) = \|x_0\|$
+\end{con}
+
+\begin{proof}
+Рассмотрим $X_0 = \{ \alpha x_0 \big| \alpha \in \C \}$.
+
+$x_0 = 0$ -- тривиальный случай. Пусть $x_0 \neq 0$.
+
+$f_0(\alpha x_0) := \alpha \cdot \|x_0 \|$. Очевидно, что $f_0 \in X^*, \ \|f_0\| = 1.$
+
+По предыдущему следствию $\exists f \in X^* \ : \ f\big|_{X_0} = f_0,\ \|f\| = 1, \ f(x_0) = f_0(x_0) = \|x_0\|$.
+\end{proof}
+
+\begin{con}[3. Вычисление нормы с помощью двойственности]
+$X$ -- нормированное пространство, $X_0 \subset X$. Тогда $\|x_0\| = \sup\limits_{f \in X^*,\ \|f\|=1} |f(x_0)|$.
+\end{con}
+
+\begin{proof}
+''$\ge$''
+
+$$|f(x_0)| \le \| f \| \cdot \|x_0 \| = \|x_0\|$$
+
+''$\le$''
+
+По следстивию 2 $\exists f \in X^* \ : \ \|f\|=1$ и $f(x_0) = \|x_0\|$.
+\end{proof}
+
+\begin{con}[4]
+$X$ -- нормированное пространство, $X_0 \subset X$ -- замкнутое линейное подпространство. 
+$x_0 \not\in X_0$, $d := \rho(x_0,X_0)$
+
+Тогда $\exists f \in X^* \ : \ f \big|_{X_0} = 0$ и $f(x_0) = d, \ \|f\| = 1$.
+\end{con}
+
+\begin{proof}
+Рассмотрим $X_1 := \Lin(X_0, x_0) = \{ v + \alpha x_0 \ \big|\ v \in X_0, \alpha \in \C\}$
+
+$f_1 : X_1 \to \C$ такой, что $f_1(v + \alpha x_0) = \alpha \cdot d$. Тогда $f_1\big|_{X_0} = 0, \ f_1(x_0) = d$.
+
+Докажем, что $\|f_1\| = 1$:
+$$\|v + \alpha x_0\| = |\alpha| \cdot \| x_0 + \frac{v}{\alpha}\| \ge \alpha \cdot \rho(x_0,X_0) = |\alpha| \cdot d$$
+$$\then |f_1(v + \alpha x_0)| = |\alpha| \cdot d \le \|v + \alpha x_0 \| \then \|f_1\| \le 1$$
+Пусть $x_n \in X_0 \ : \ \|x_n - x_0\| \le d$
+
+$$f_1(x_n - x_0) = -d \then \frac{|f_1(x_n - x_0)|}{\|x_n - x_0\|} \to 1 \then \|f\| = 1$$
+
+По следствию 1 $\exists f \in X^* \ : \ f\big|_{X_1} = f_1$ и $\|f\| = \|f_1\| = 1$.
+\end{proof}
+
+\begin{thm}[О полноте]
+$X$ -- нормированное пространство, $\{ x_n \}_{n=1}^\infty \subset X$.
+
+Следующие утверждения равносильны:
+
+1) Система $\{ x_n \}_{n=1}^\infty$  не полна в $X$
+
+2) $\exists f \in X^* \ : \ f \neq 0$ и $f(x_n) = 0 \ \forall n \in \N$.
+\end{thm}
+
+\begin{proof}
+(2) $\to$ (1)
+
+Пусть система $\{ x_n \}_{n=1}^\infty$ полна.
+
+$f(x_n) = 0 \ \forall n \then f\big|_{\Lin \{ x_n \}} = 0 \overset{\Lin \{ x_n \} \text{ всюду плотно}}{\then} f=0$ на $X$
+
+(1) $\to$ (2)
+
+Система $\{ x_n \}_{n=1}^\infty$ не полна. Тогда
+
+$$x_0 := \underbrace{\overline{\Lin}}_{\text{замкнутое линейное подпр-во}} \{ x_n \} \overset{\text{не полна}}{\neq} X$$
+
+По следствию 4 $\exists f \in X^*, \ f \neq 0 \ : \ f\big|_{X_0}  = 0 \then \forall n \in \N \ f(x_n) = 0$.
+\end{proof}
+
+\section{Теорема Крейна-Мильмана}
+\begin{dfn}
+$X$ -- векторное пространство над $\C$, $K \subset X$ -- выпуклый компакт, $S \subset K$.
+
+Множество $S$ называется крайним множеством для $K$, если $\nexists x \in K, \ y \in K \smallsetminus S$ и $t \in (0;1) \ : \ tx + (1-t)y \in S$.
+
+(Иначе говоря, если $x,y \in K$ и $tx + (1-t) y \in S$, где $t \in (0;1)$, то $x,y \in S$)
+\end{dfn}
+
+\begin{dfn}
+Точку $x_0 \in K$ называется крайней, если $\{ x_0 \}$ -- крайнее множество для $K$.
+
+Таким образом $\nexists x,y \in K, \ x \neq x_0$ или $y \neq y_0$ и $t \in (0;1)  \ x_0 = tx + (1-t)y$.
+\end{dfn}
+
+\begin{note}
+Пусть $K$ -- выпуклое многообразие в $\R^n$. Грани и ребра $K$ -- крайние множества. Вершины -- крайние точки.
+\end{note}
+
+\begin{ex}
+$K$ -- куб.
+\end{ex}
+
+\begin{dfn}
+Пусть $E \subset X$.
+$$\Conv E := \{ \sm_{i=1}^n \lambda_i x_i \ \big| \ x_i \in E, \ \lambda_i \ge 0, \ \sm_{i=1}^n = 1\} $$ -- выпуклая оболочка множества $E$.
+
+$\Conv E = \bigcap\limits_{F \text{ выпукла, }F \supset E} F$
+\end{dfn}
+
+\begin{thm}[Крейна-Мильмана]
+
+$X$ -- вещественное нормированное пространство. $K \subset X$ -- выпуклый компакт.
+
+$E := \{ x_0 \ \big| \ x_0 \in K$ и $x_0$ -- крайняя точка множества $K \}$.
+
+Тогда $K  = \overline{\Conv E}$
+\end{thm}
+
+\begin{note}
+\begin{enumerate}
+\item
+В частности, множество крайних точек $K$ непусто.
+
+\item
+''$\supset$'' -- тривиально.
+\end{enumerate}
+\end{note}
+
+\begin{proof}
+
+$ \mathcal{P} := \{ S \ \big| \ S \neq \empt, \ S \text{ -- компакт}, \ S \text{ -- крайнее множество для } K\}$
+
+$K$ -- крайнее для себя$\then K \in  \mathcal{P} \then  \mathcal{P} \neq \empt$
+
+Введем на $\mathcal{P}$ частичный порядок: $S_1 \prec S_2 \overset{\text{def}}{\iaoi} S_1 \subset S_2$
+
+Пусть $\{ S_\alpha \}_{\alpha \in A}$ -- линейно-упорядоченное подмножество.
+
+Докажем, что у $\{ S_\alpha \}_{\alpha \in A}$ есть нижняя граница:
+
+\parindent = 1cm
+$S := \bigcap\limits_{\alpha \in A} S_\alpha$
+
+$S$ -- компакт, $S \neq \empt$ (как пересечение вложенных компактов).
+
+Пусть $x \in K, \ y \in K \smallsetminus S , \ t \in (0;1) \ : \ tx+(1-t)y \in S$.
+
+$z \in S_\alpha \ \forall \alpha \in A \then z = tx + (1-ty) \then x,y \in S_\alpha \ \forall \alpha \in A \then x,y \in S$.
+
+По лемме Цорна в $\mathcal{P}$ существует минимальный элемент $S_{\text{min}}$.
+
+\parindent = 0cm
+Докажем, что $S_{\text{min}}$ состоит только из одной точки:
+
+\parindent = 1cm
+Пусть $x_0,y_0 \in S_{\text{min}}, \ x_0 \neq y_0$.
+
+Выберем $f \in X^* \ : \ f(x_0) \neq f(y_0)$
+
+\begin{exer}
+Показать,что такой $f$ существует.
+\end{exer}
+
+Пусть $a := \max\limits_{x \in S_{\text{min}}} f(x)$
+
+$S_{\text{min}}^{f,a} := \{ x \in S_{\text{min}} \ \big| \ f(x) = a \} \neq \empt$
+
+Докажем, что $S_{\text{min}}^{f,a}$ -- крайнее.
+
+\parindent = 2cm
+Пусть $t x + (1-t)y \in S_{\text{min}}^{f,a} \ : \ x,y \in K, \ (0;1)$
+
+$z \in S_{\text{min}}$ -- крайняя $\then x,y \in S_{\text{min}}$.
+
+$f(z) = a = f(tx+(1-t)y) = t\underbrace{f(x)}_{\le a}+(1-t)\underbrace{f(y)}_{\le a} \then f(x) = f(y) = a$
+
+$\then x,y \in S_{\text{min}}^{f,a} \then S_{\text{min}}^{f,a}$ -- крайнее.
+
+\parindent = 1cm
+$x_0, y_0 \in S_{\text{min}}$ и $f(x_0) \neq f(y_0) \then
+ S_{\text{min}}^{f,a} \not\subset \{x_0, y_0 \} \then  S_{\text{min}}^{f,a} \underset{\neq}{\subset}  S_{\text{min}}$. Противоречие.
+ 
+\parindent = 0cm
+ $\then  S_{\text{min}}$ -- одноточечное, то есть это и есть крайняя точка
+
+$E \neq \empt, \ \overline{\Conv E}$ -- непустой компакт.
+
+Пусть $K \underset{\neq}{\supset} \overline{\Conv E}$. Выберем $x_0 \in K \smallsetminus \overline{\Conv E}$.
+
+По \textit{Второй теореме отделимости} $\exists f \in X^*$ и $a_0 \in \R \ : \ f(x_0) > a_0$.
+
+$a := \max\limits_{K} f(x), \ \ K^{f,a} := \{ x \in K \ \big| \ f(x) = a \} \in \mathcal{P}$
+
+По доказанному выше, существует крайняя точка компакта $K$ из $K^{f,a}$. Обозначим её $y_0$.
+
+$f(y_0) = a \then y_0 \not\in \overline{\Conv E}$. Получили противоречие.
+\end{proof}
+
+\begin{exer}
+Крайняя точка для $K^{f,a}$ будет крайней и для $K$.
+\end{exer}
+
+\chapter{Сопряженное пространство и слабые топологии}
+
+\section{Заряды. Теорема Радона--Никодима}
+
+\end{document}
+ 
